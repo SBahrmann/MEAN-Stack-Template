@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Benutzer anlegen</h1>
+
+<div mat-dialog-content fxLayout="column" fxLayoutGap="1rem">
+    <mat-form-field fxFlex appearance="fill" fxLayoutGap="1rem">
+        <mat-label>Name</mat-label>
+        <input name="fullname" matInput [(ngModel)]="user.name" required>
+    </mat-form-field>
+
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>E-Mail</mat-label>
+        <input type="email" name="email" matInput [(ngModel)]="user.email" required>
+    </mat-form-field>
+
+    <div *ngIf="edit && !isUpdate">
+        <button mat-stroked-button color="primary" fxFlex (click)="isUpdate = true">Passwort ändern</button>
+    </div>
+
+    <div *ngIf="!edit || isUpdate" fxLayout="column" fxLayoutGap="1rem">
+        <div fxLayoutAlign="space-between center" fxLayoutGap="1rem">
+            <mat-form-field fxFlex appearance="fill">
+                <mat-label>Passwort</mat-label>
+                <input matInput name="password" [type]="(showPassword)?'text':'password'" [(ngModel)]="user.password"
+                    required>
+
+                <button matSuffix mat-icon-button (click)="setPassword()">
+                    <mat-icon>lock_reset</mat-icon>
+                </button>
+
+                <button matSuffix mat-icon-button (click)="showPassword=!showPassword">
+                    <mat-icon *ngIf="showPassword">visibility</mat-icon>
+                    <mat-icon *ngIf="!showPassword">visibility_off</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <button mat-icon-button (click)="isUpdate = false; user.password = ''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <ul *ngIf="!validateUser()">
+            <li *ngIf="!validate.minLength">Mindestlänge von 16 Zeichen nicht erreicht!</li>
+            <li *ngIf="!validate.hasAlphabetic">Kein Buchstabe vorhanden!</li>
+            <li *ngIf="!validate.hasNumber">Keine Nummer vorhanden!</li>
+        </ul>
+    </div>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-flat-button *ngIf="user._id" color="primary" [disabled]="!validateUser()"
+        (click)="handleUpdate()">Speichern</button>
+
+    <button mat-flat-button *ngIf="!user._id" color="primary" (click)="handleRegister()">Speichern</button>
+
+    <button mat-button mat-dialog-close>Schließen</button>
+</div>

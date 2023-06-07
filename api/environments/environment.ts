@@ -1,0 +1,16 @@
+export const environment = {
+  production: false,
+  secret: 'mean',
+  port: 4201,
+  contextRoot: '',
+  dbUrl: 'mongodb://127.0.0.1:27017/mean',
+  dbName: 'mean',
+  dbUser: '',
+  dbPassword: '',
+  dbAppName: '',
+  dbReplicaSet: '',
+  dbRetryWrites: false,
+  dbMaxIdleTimeMS: 12000,
+  dbAuthSource: 'admin',
+  distFolder: 'dist',
+};
